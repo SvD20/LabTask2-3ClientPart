@@ -1,22 +1,28 @@
 package edu.bsuir.clientfx.model;
 
+import edu.bsuir.clientfx.controller.Controller;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-
+import java.net.URL;
 
 
 public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("../gui/sample.fxml"));
-        primaryStage.setTitle("Client");
-        primaryStage.setScene(new Scene(root, 732, 506));
+        FXMLLoader loader = new FXMLLoader();
+        URL xmlUrl = getClass().getResource("/sample.fxml");
+        loader.setLocation(xmlUrl);
+        Parent root = loader.load();
+
+        primaryStage.setScene(new Scene(root));
         primaryStage.show();
+
+        Controller controller = loader.getController();
     }
 
 
