@@ -1,32 +1,66 @@
 package edu.bsuir.clientfx.controller;
 
-
+import edu.bsuir.clientfx.client.Client;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
+import java.io.IOException;
 
 public class Controller {
 
-    @FXML
-    private Button connect_with_server;
+    private Client client = new Client();
+    private String data = null;
 
     @FXML
-    private TextArea output_for_rezult;
+    private TextField field_for_ip;
 
     @FXML
-    private Button send_data_to_server;
+    private TextField field_for_port;
 
     @FXML
-    private TextField window_for_IP;
+    private TextField field_for_data;
 
     @FXML
-    private TextField window_for_port;
+    private TextArea results_output;
 
     @FXML
-    private TextField window_for_sendingdata;
+    private Button connectbutton;
 
+    @FXML
+    public Button sendbutton;
+
+    public void initialize(){
+
+        field_for_ip.setText("localhost");
+        field_for_port.setText("8080");
+
+        connectbutton.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> {
+            try {
+                client.connectionCreate("localhost",8080);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+
+        sendbutton.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> {
+            try {
+                String serverWord = client.dataSenderAndTake(field_for_data.getText());
+                results_output.setText(serverWord);
+                client.streamsClose();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+
+
+
+
+
+    }
 
 }
+
 
 
